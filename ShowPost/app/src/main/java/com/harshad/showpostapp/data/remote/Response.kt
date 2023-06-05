@@ -1,4 +1,4 @@
-package com.harshad.showpostapp.data
+package com.harshad.showpostapp.data.remote
 
 import com.google.gson.annotations.SerializedName
 
