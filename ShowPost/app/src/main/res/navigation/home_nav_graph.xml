@@ -9,7 +9,7 @@
         android:id="@+id/allPostFragment"
         android:name="com.harshad.showpostapp.ui.AllPostFragment"
         android:label="fragment_all_post"
-        tools:layout="@layout/fragment_all_post" >
+        tools:layout="@layout/fragment_all_post">
         <action
             android:id="@+id/action_allPostFragment_to_postDetailsFragment"
             app:destination="@id/postDetailsFragment" />
@@ -18,5 +18,9 @@
         android:id="@+id/postDetailsFragment"
         android:name="com.harshad.showpostapp.ui.PostDetailsFragment"
         android:label="fragment_post_details"
-        tools:layout="@layout/fragment_post_details" />
+        tools:layout="@layout/fragment_post_details">
+        <argument
+            android:name="post"
+            app:argType="com.harshad.showpostapp.data.DetailPost" />
+    </fragment>
 </navigation>
