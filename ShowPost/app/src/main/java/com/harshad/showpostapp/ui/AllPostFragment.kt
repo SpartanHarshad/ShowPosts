@@ -1,5 +1,6 @@
 package com.harshad.showpostapp.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -32,9 +33,20 @@ class AllPostFragment : Fragment(), OnItemClick {
     private lateinit var checkConnection: CheckConnection
     private var posts = emptyList<PostEntity>()
     private lateinit var postsAdapter: PostsAdapter
+    private val TAG = "AllPost"
+
+    companion object {
+        var isPostFetched = false
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d(TAG, "onAttach")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate")
     }
 
     override fun onCreateView(
@@ -42,21 +54,30 @@ class AllPostFragment : Fragment(), OnItemClick {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        Log.d(TAG, "onCreateView")
         binding = FragmentAllPostBinding.inflate(inflater, container, false)
         initViewModel()
         checkNetworkAndCallApi()
         setRecyclerview()
-        getPostFromLocalDb()
+        checkApiCalled()
         return binding.root
+    }
+
+    private fun checkApiCalled() {
+        if (!isPostFetched){
+            getPostFromLocalDb()
+        }else{
+            binding.loader.visibility = View.GONE
+        }
     }
 
     private fun getPostFromLocalDb() {
         binding.loader.visibility = View.GONE
+        isPostFetched = true
         CoroutineScope(Dispatchers.IO).launch {
             posts = postViewModel.getAllLocalPost()
             postsAdapter.updatePostList(posts)
         }
-
     }
 
     private fun setRecyclerview() {
@@ -95,4 +116,28 @@ class AllPostFragment : Fragment(), OnItemClick {
         findNavController().navigate(action)
     }
 
+    override fun onStart() {
+        super.onStart()
+        Log.d(TAG, "onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d(TAG, "onDestroyView")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d(TAG, "onDetach")
+    }
 }
