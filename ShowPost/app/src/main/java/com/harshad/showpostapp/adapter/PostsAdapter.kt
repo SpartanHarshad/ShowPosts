@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.harshad.showpostapp.data.local.PostEntity
 import com.harshad.showpostapp.databinding.ItemLayoutBinding
 
-class PostsAdapter(private val posts: List<PostEntity>, val onItemClick: OnItemClick) :
+class PostsAdapter(private var posts: List<PostEntity>, val onItemClick: OnItemClick) :
     RecyclerView.Adapter<PostsAdapter.PostViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostsAdapter.PostViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -20,6 +20,11 @@ class PostsAdapter(private val posts: List<PostEntity>, val onItemClick: OnItemC
 
     override fun getItemCount(): Int {
         return posts.size
+    }
+
+    fun updatePostList(postsList: List<PostEntity>) {
+        posts = postsList
+        notifyDataSetChanged()
     }
 
     inner class PostViewHolder(private val binding: ItemLayoutBinding) :
